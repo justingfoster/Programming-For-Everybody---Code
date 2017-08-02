@@ -18,7 +18,7 @@ while True:
     acct = input('Enter Twitter Account:')
     if (len(acct) < 1): break
     url = twurl.augment(TWITTER_URL,
-                        {'screen_name': acct, 'count': '5'})
+                        {'screen_name': acct, 'count': '20'})
     print('Retrieving', url)
     connection = urllib.request.urlopen(url, context=ctx)
     data = connection.read().decode()
@@ -35,4 +35,4 @@ while True:
             print('   * No status found')
             continue
         s = u['status']['text']
-        print('  ', s[:50])
+        print('  ', s[:150])
