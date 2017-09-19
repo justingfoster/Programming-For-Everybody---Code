@@ -28,16 +28,24 @@ for tag in tags:
             soup3 = BeautifulSoup(html3, 'html.parser')
             print(url3)
 
-            #text = soup3.find_all('script', "js-map-config")
-            for text in soup3.stripped_strings:
-                text2 = repr(text)
-                try:
-                    lon = re.search('"longitude":(.+?),', text).group(1)
-                    lat = re.search('"latitude":(.+?),', text).group(1)
-                    print("longitude: ", lon)
-                    print("latitude: ", lat)
-                except:
-                    pass
+            text = soup3.find_all('script', "js-map-config")
+            paragraphs = []
+
+            for par in text:
+                paragraphs.append(str(par))
+
+            parag = str(paragraphs)
+
+            loc = re.search('locs":(.+?)"nearbyLocs',parag).group(0)
+            #locs = re.search('locs":([a-z0-9])"nearbyLocs', parag).group(0)
+
+            lon = re.findall('"longitude":(.+?),', loc)
+            lat = re.findall('"latitude":(.+?),', loc)
+
+            coordinates = dict(zip(lon,lat))
+
+            for x,y in coordinates.items():
+                print(x,", ",y)
 
         except:
             pass
